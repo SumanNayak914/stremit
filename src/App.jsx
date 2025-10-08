@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
-import Header from './components/Header'
-import Footer from './Components/Footer'
+import Home from '../src/pages/Home'
+import Header from '../src/Components/Header'
+import Footer from '../src/Components/Footer'
 
 const App = () => {
   return (
