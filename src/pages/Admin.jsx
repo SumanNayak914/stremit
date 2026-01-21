@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { saveQuestions, getQuestions, clearQuestions, deleteQuestion } from '../services/geminiApi';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Admin = () => {
   const [topic, setTopic] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
@@ -41,7 +43,7 @@ const Admin = () => {
       const questionsInBatch = Math.min(BATCH_SIZE, totalQuestions - (batch * BATCH_SIZE));
       
       try {
-        const response = await fetch('http://localhost:5000/api/generate-questions', {
+        const response = await fetch(`${API_URL}/api/generate-questions`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -185,7 +187,7 @@ const Admin = () => {
       });
 
       // Send to backend
-      const response = await fetch('http://localhost:5000/api/send-email', {
+      const response = await fetch(`${API_URL}/api/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
