@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -10,14 +10,29 @@ import Sliders from './pages/Sliders';
 import Wallets from './pages/Wallets';
 
 const App = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Router>
       <div className="flex min-h-screen bg-gray-50">
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
         {/* Main Content Area */}
-        <main className="flex-1 ml-[250px]">
+        <main className={`flex-1 transition-all duration-300 ${
+          sidebarOpen ? 'md:ml-[250px]' : 'ml-0'
+        }`}>
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
