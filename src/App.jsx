@@ -1,24 +1,37 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-// import Home from '../src/pages/Home'  // Hidden for now
-import Admin from '../src/pages/Admin'
-import Header from '../src/Components/Header'
-import Footer from '../src/Components/Footer'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import Dashboard from './pages/Dashboard';
+import Categories from './pages/Categories';
+import Questions from './pages/Questions';
+import Tasks from './pages/Tasks';
+import Users from './pages/Users';
+import Sliders from './pages/Sliders';
+import Wallets from './pages/Wallets';
 
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-      <Header/>
-      <Routes>
-        {/* Home page hidden for now */}
-        {/* <Route path='/home' element={<Home/>}/> */}
-        <Route path='/' element={<Admin/>}/>
-      </Routes>
-      <Footer/>
-      </BrowserRouter>
-    </div>
-  )
-}
+    <Router>
+      <div className="flex min-h-screen bg-gray-50">
+        {/* Sidebar */}
+        <Sidebar />
 
-export default App
+        {/* Main Content Area */}
+        <main className="flex-1 ml-[250px]">
+          <Routes>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/sliders" element={<Sliders />} />
+            <Route path="/wallets" element={<Wallets />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
+};
+
+export default App;
